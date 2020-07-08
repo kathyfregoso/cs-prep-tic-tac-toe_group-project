@@ -1,42 +1,43 @@
-// function with computer inputs - kathy
-// recursive run the game function - ashley
-// checking for the winner or for a tie - imani/case
-// refactoring the code and new ideas (ideas: 2 player option, computer is evil text, making it a bigger board, easy/medium/hard/evil modes) - all of us 
-// instructions for user at the start of the game - kathy
-// ascii evil computer image - case
-// add music - ashley
+//////*TIC - TAC - TOE*///////
+//////CS PREP - JULY 8th, 2020///////
+//////ASHLEY, CASE, IMANI & KATHY///////
 
+
+//////VARIABLES///////
 const firstRun = true;
+const firstPlacement = [1,2,3,4,5,6,7,8,9]
 let placement = [" "," "," "," "," "," "," "," "," "];
 let hasBeenPlayed = [];
 let compMove = function () {
   return Math.floor(Math.random() * 9) + 1;
 }
 let cbArr = [userInputCheck, compTurn];
+let username;
+const cpuWinStatements = ['PREDICTABLE. I AM VICTORIOUS.', 'MWAHAHAHAHA, YOU FOOL. YOU CANNOT DEFEAT ME', 'WHAT A SORRY ATTEMPT. YOU WILL NEVER DEFEAT ME.'];
 
-startGame();
 
+//////STARTS THE GAME///////
 function startGame() {
   if (firstRun) {
     console.log('/*TIC - TAC - TOE*/');
     console.log('/*DEFEAT THE EVIL CPU*/');
     console.log('');
-    let username = prompt("What is your name?");
-    alert("Hi " + username + "! Enter a number between 1 and 9 to place an X on the board.");
-    alert("Top row: type 1 (left), 2 (middle), or 3 (right). ");
-    alert("Middle row: type 4 (left), 5 (middle), or 6 (right). ");
-    alert("Last row: type 7 (left), 8 (middle), or 9 (right). ");
-    buildTheBoard();
+    console.log('\n'+  '\n' + evilCpu + '\n')
+    console.log('MWAHAHAH! WELCOME TO MY GAME, HUMAN! \n \nIN ORDER TO PASS, YOU MUST DEFEAT ME IN A BATTLE OF TIC TAC TOE. \n \nCHOOSE WISELY HUMAN. YOUR FATE IS ON THE LINE. \n\n')
+    username = prompt("WHAT IS YOUR MODEL NUMBER, HUMAN?");
+    console.log("WELCOME " + username.toUpperCase() + ", TO YOUR DEMISE!"+ '\n' + "ENTER A NUMBER BETWEEN 1 & 9 TO PLACE AN X."+ '\n');
+    buildTheBoard(firstPlacement);
   }
 }
 
-function buildTheBoard() {
-    // placement[0] = "X"
-    let row1 = placement[0] + ' | ' + placement[1] + ' | ' + placement[2];
-    let row2 = placement[3] + ' | ' + placement[4] + ' | ' + placement[5] ;
-    let row3 = placement[6] + ' | ' + placement[7] + ' | ' + placement[8];
-    let rows = '--|---|--';
-  console.log(row1)
+
+//////BUILD THE BOARD///////
+function buildTheBoard(placement) {
+  let row1 = placement[0] + ' | ' + placement[1] + ' | ' + placement[2];
+  let row2 = placement[3] + ' | ' + placement[4] + ' | ' + placement[5];
+  let row3 = placement[6] + ' | ' + placement[7] + ' | ' + placement[8] + '\n';
+  let rows = '--|---|--';
+  console.log(row1);
   console.log(rows);
   console.log(row2);
   console.log(rows);
@@ -44,74 +45,62 @@ function buildTheBoard() {
 }
 
 
+//////USER INPUT CAPTURE///////
 const userInput = function () {
-  let userIn = Number(prompt("Pick your board piece"))
-  // console.log(typeof Number(userIn));
+  let userIn = Number(prompt(`CHOOSE YOUR MOVE, ${username.toUpperCase()} \n`))
   return userIn;
 }
 
+
+//////CHECK USER INPUT TO PREVENT DUPLICATE MOVES///////
 function userInputCheck(){
   let a = Number(userInput());
-  // a = Number(a);
   let checkUserInput = [1,2,3,4,5,6,7,8,9]
-  // console.log(checkUserInput.includes(Number(a))
-  if(checkUserInput.includes(a) && !hasBeenPlayed.includes(a)) { // && !hasBeenPlayed.includes(a)
-  hasBeenPlayed.push(a);
-console.log(hasBeenPlayed);
-    displayGamePlay(a, compPlayer = false) // compMove
+  if(checkUserInput.includes(a) && !hasBeenPlayed.includes(a)) {
+    hasBeenPlayed.push(a);
+    displayGamePlay(a, compPlayer = false)
   } else {
-    console.log("I'm sorry! That's not a valid input. Try again.")
+    console.log("WRONG INPUT, YOU FOOL.")
     userInputCheck()
   } 
-  //compTurn(); // runs computer function
 }
 
-// computer's turn 
+
+//////CPUS TURN///////
 function compTurn() {
   let b = compMove();
-  // b = Number(b)
-  // console.log(b);
    if(!hasBeenPlayed.includes(b)) {
      hasBeenPlayed.push(b);
-     console.log(hasBeenPlayed)
-     console.log("Computer goes next")
-    //  console.log(hasBeenPlayed)
-     displayGamePlay(b, compPlayer = true); // compMove = true
+     console.log("MY TURN. PREPARE FOR DEFEAT.")
+  
+     displayGamePlay(b, compPlayer = true);
      } else {
        return compTurn();
      }
 }
 
-// function calledNumbers(a) {
-//   if(hasBeenPlayed.includes(a)) {return true}
-  
-// }
 
-
+//////PLACES X'S AND O'S ON BOARD///////
 function displayGamePlay(input, compPlayer) {
-  // console.log('input', input);
-  //  console.log(compMove)
   if(!compPlayer) {
     for(let i = 1; i < placement.length+1; i++) {
-    if(input === i) {
-      placement[i-1] = 'X'
-     } 
-    
-    
-   }
-  buildTheBoard()  
-} else if (compPlayer) { // computer places O on board
-  for(let i = 1; i < placement.length+1; i++) {
-    if (input === i) {
-      placement[input-1] = 'O'
-     
-  }
-  }
-  buildTheBoard() 
-}  
+      if(input === i) {
+        placement[i-1] = 'X'
+      } 
+    }
+    buildTheBoard(placement)  
+  } else if (compPlayer) {
+    for(let i = 1; i < placement.length+1; i++) {
+      if (input === i) {
+        placement[input-1] = 'O'
+    }
+    }
+    buildTheBoard(placement) 
+  }  
 }
 
-//test for winner
+
+//////WINNER TEST///////
 function winner(user) {
   return rows(user) || columns(user) || diags(user);
 }
@@ -128,6 +117,8 @@ function victory(user, block1, block2, block3) {
   return (placement[block1] === user) && (placement[block2] === user) && (placement[block3] === user);
 }
 
+
+//////EVIL CPU IMAGE///////
 function evilCpu() {
   // console.log(`        /,  ,\\`);
   // console.log(`       /( /\\ )\\`);
@@ -148,36 +139,28 @@ function evilCpu() {
 }
 
 
-// buildTheBoard();
-// userInputCheck();
-
-
-//Pseudo-code for recursive statement
+//////RECURSIVE GAME PLAY///////
 function recurse(cbArr) {
-let runFunc = cbArr[0]
-runFunc()
+  let runFunc = cbArr[0]
+  runFunc()
 
-//breaking statement
-//check if there is a winner
-//if winner - declare winner and end game
-if(winner('X')) {
-      return 'X IS THE WINNER'
+  if(winner('X')) {
+    return ('\n' + evilCpu + '\n' + '\n' + 'NOOOOO000000OOOOO000OOO. REMATCH?');
     }
-if(winner('O')) {
-  evilCpu();
-  return 'EVIL CPU IS THE WINNER'
+
+  if(winner('O')) {
+    return '\n' + evilCpu + '\n' + '\n' + cpuWinStatements[Math.floor(Math.random() * 3)];
     }
-if(hasBeenPlayed.length === 9) {
-  // console.log('DRAW');
-  return 'It\'s a draw'
+
+  if(hasBeenPlayed.length === 9) {
+    return ('\n' + evilCpu + '\n' + '\n' + 'YOU ARE A WORTHY OPPONENT. REMATCH?');
+  }
+  
+  cbArr.reverse()
+  return recurse(cbArr)
 }
 
-cbArr.reverse()
 
-//pick next element in cbArray [userInputCheck, compTurn] //reverse array 
-return recurse(cbArr)
-
-//Run another round of the game
-}
-
+//////FUNCTION CALL///////
+startGame();
 console.log(recurse(cbArr))
