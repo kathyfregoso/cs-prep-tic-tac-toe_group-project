@@ -7,11 +7,12 @@
 // add music - ashley
 
 const firstRun = true;
-let placement = ["X","O",""," "," "," "," "," "," "];
+let placement = [" "," "," "," "," "," "," "," "," "];
 let hasBeenPlayed = [];
 let compMove = function () {
   return Math.floor(Math.random() * 9) + 1;
 }
+let cbArr = [userInputCheck, compTurn];
 
 startGame();
 
@@ -21,7 +22,11 @@ function startGame() {
     console.log('/*DEFEAT THE EVIL CPU*/');
     console.log('');
     let username = prompt("What is your name?");
-    alert("Hi " + username + ", enter a number between 1 and 9.");
+    alert("Hi " + username + "! Enter a number between 1 and 9 to place an X on the board.");
+    alert("Top row: type 1 (left), 2 (middle), or 3 (right). ");
+    alert("Middle row: type 4 (left), 5 (middle), or 6 (right). ");
+    alert("Last row: type 7 (left), 8 (middle), or 9 (right). ");
+    buildTheBoard();
   }
 }
 
@@ -42,8 +47,6 @@ function buildTheBoard() {
 const userInput = function () {
   let userIn = Number(prompt("Pick your board piece"))
   // console.log(typeof Number(userIn));
-  hasBeenPlayed.push(userIn);
-  // console.log(hasBeenPlayed);
   return userIn;
 }
 
@@ -52,13 +55,15 @@ function userInputCheck(){
   // a = Number(a);
   let checkUserInput = [1,2,3,4,5,6,7,8,9]
   // console.log(checkUserInput.includes(Number(a))
-  if(checkUserInput.includes(a)) { // && !hasBeenPlayed.includes(a)
+  if(checkUserInput.includes(a) && !hasBeenPlayed.includes(a)) { // && !hasBeenPlayed.includes(a)
+  hasBeenPlayed.push(a);
+console.log(hasBeenPlayed);
     displayGamePlay(a, compPlayer = false) // compMove
   } else {
     console.log("I'm sorry! That's not a valid input. Try again.")
     userInputCheck()
   } 
-  compTurn(); // runs computer function
+  //compTurn(); // runs computer function
 }
 
 // computer's turn 
@@ -68,6 +73,7 @@ function compTurn() {
   // console.log(b);
    if(!hasBeenPlayed.includes(b)) {
      hasBeenPlayed.push(b);
+     console.log(hasBeenPlayed)
      console.log("Computer goes next")
     //  console.log(hasBeenPlayed)
      displayGamePlay(b, compPlayer = true); // compMove = true
@@ -90,16 +96,8 @@ function displayGamePlay(input, compPlayer) {
     if(input === i) {
       placement[i-1] = 'X'
      } 
-    if(winner('X')) {
-      console.log('X IS THE WINNER');
-    }
-    if(winner('O')) {
-      console.log('EVIL CPU IS THE WINNER');
-      evilCpu();
-    }
-    if(hasBeenPlayed.length === 9) {
-      console.log('DRAW');
-    }
+    
+    
    }
   buildTheBoard()  
 } else if (compPlayer) { // computer places O on board
@@ -150,7 +148,36 @@ function evilCpu() {
 }
 
 
-buildTheBoard();
-userInputCheck();
+// buildTheBoard();
+// userInputCheck();
 
 
+//Pseudo-code for recursive statement
+function recurse(cbArr) {
+let runFunc = cbArr[0]
+runFunc()
+
+//breaking statement
+//check if there is a winner
+//if winner - declare winner and end game
+if(winner('X')) {
+      return 'X IS THE WINNER'
+    }
+if(winner('O')) {
+  evilCpu();
+  return 'EVIL CPU IS THE WINNER'
+    }
+if(hasBeenPlayed.length === 9) {
+  // console.log('DRAW');
+  return 'It\'s a draw'
+}
+
+cbArr.reverse()
+
+//pick next element in cbArray [userInputCheck, compTurn] //reverse array 
+return recurse(cbArr)
+
+//Run another round of the game
+}
+
+console.log(recurse(cbArr))
