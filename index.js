@@ -28,7 +28,7 @@ function startGame() {
     console.log('\n' + "WELCOME " + username.toUpperCase() + ", TO YOUR DEMISE!" + '\n' + '\n' + "ENTER A NUMBER BETWEEN 1 & 9 TO PLACE AN X."+ '\n');
     buildTheBoard(firstPlacement);
   }
-}
+} 
 
 
 //////BUILD THE BOARD///////
