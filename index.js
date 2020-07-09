@@ -25,7 +25,7 @@ function startGame() {
     console.log('\n'+  '\n' + evilCpu + '\n')
     console.log('MWAHAHAH! WELCOME TO MY GAME, HUMAN! \n \nIN ORDER TO PASS, YOU MUST DEFEAT ME IN A BATTLE OF TIC TAC TOE. \n \nCHOOSE WISELY HUMAN. YOUR FATE IS ON THE LINE. \n\n')
     username = prompt("WHAT IS YOUR MODEL NUMBER, HUMAN?");
-    console.log("WELCOME " + username.toUpperCase() + ", TO YOUR DEMISE!"+ '\n' + "ENTER A NUMBER BETWEEN 1 & 9 TO PLACE AN X."+ '\n');
+    console.log('\n' + "WELCOME " + username.toUpperCase() + ", TO YOUR DEMISE!" + '\n' + '\n' + "ENTER A NUMBER BETWEEN 1 & 9 TO PLACE AN X."+ '\n');
     buildTheBoard(firstPlacement);
   }
 }
@@ -145,7 +145,7 @@ function recurse(cbArr) {
   runFunc()
 
   if(winner('X')) {
-    return ('\n' + evilCpu + '\n' + '\n' + 'NOOOOO000000OOOOO000OOO. REMATCH?');
+    return ('\n' + evilCpu + '\n' + '\n' + 'NOOOOO000000OOOOO000OOO. I BOW DOWN IN SERVITUDE. REMATCH?');
     }
 
   if(winner('O')) {
